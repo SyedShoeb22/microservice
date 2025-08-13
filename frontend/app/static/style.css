@@ -1,0 +1,12 @@
+body { font-family: system-ui, sans-serif; margin:0; background:#fafafa; }
+nav { display:flex; justify-content:space-between; padding:12px 16px; background:#111; color:#fff; }
+nav a { color:#fff; margin-right:12px; text-decoration:none; }
+main { padding:16px; max-width:900px; margin:0 auto; }
+.grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.card { background:#fff; border:1px solid #eee; padding:12px; border-radius:10px; }
+.price { font-weight:bold; margin:8px 0; }
+.flash .alert { padding:8px 12px; margin:8px 0; border-radius:6px; }
+.alert.success { background:#e6ffed; }
+.alert.danger { background:#ffe6e6; }
+.alert.info { background:#e6f0ff; }
+.alert.warning { background:#fff6e6; }
