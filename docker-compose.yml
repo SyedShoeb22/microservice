@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    environment:
+      - FLASK_RUN_HOST=0.0.0.0
+      - DB_PATH=/data/user.db
+      - SECRET_KEY=changeme
+    volumes:
+      - user_data:/data
+    ports:
+      - "5001:5001"
+    networks:
+      - micro_net
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    environment:
+      - FLASK_RUN_HOST=0.0.0.0
+      - DB_PATH=/data/product.db
+    volumes:
+      - product_data:/data
+    ports:
+      - "5002:5002"
+    networks:
+      - micro_net
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    environment:
+      - FLASK_RUN_HOST=0.0.0.0
+      - DB_PATH=/data/order.db
+    volumes:
+      - order_data:/data
+    ports:
+      - "5003:5003"
+    networks:
+      - micro_net
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-app
+    environment:
+      # service hostnames match compose service names
+      - USER_API_URL=http://user-service:5001
+      - PRODUCT_API_URL=http://product-service:5002
+      - ORDER_API_URL=http://order-service:5003
+      - SECRET_KEY=frontendsecret
+      - FLASK_RUN_HOST=0.0.0.0
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+    ports:
+      - "5000:5000"
+    networks:
+      - micro_net
+
+networks:
+  micro_net:
+
+volumes:
+  user_data:
+  product_data:
+  order_data:
