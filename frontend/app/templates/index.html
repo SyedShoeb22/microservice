@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Products</h1>
+<div class="grid">
+  {% for p in products %}
+    <div class="card">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.description }}</p>
+      <div class="price">$ {{ "%.2f"|format(p.price) }}</div>
+      <form method="post" action="{{ url_for('buy', product_id=p.id) }}">
+        <button type="submit">Buy</button>
+      </form>
+    </div>
+  {% else %}
+    <p>No products available (product-service down?).</p>
+  {% endfor %}
+</div>
+{% endblock %}
